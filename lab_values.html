@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>LabConfirm</title>
+
+    <style>
+        body {
+            width: 300px;
+            margin: 0;
+            padding: 20px;
+
+            font-family: Arial, sans-serif;
+            color: #222;
+            background: #f5b368;
+        }
+
+        h1 {
+            font-size: 20px;
+            margin: 0 0 8px 0;
+        }
+
+        .description {
+            font-size: 13px;
+            line-height: 1.5;
+            color: #000000;
+            margin-bottom: 16px;
+        }
+
+        .shortcut {
+            background: #f3f3f3;
+            border-radius: 8px;
+            padding: 10px 12px;
+            margin-bottom: 16px;
+            font-size: 13px;
+        }
+
+        .shortcut strong {
+            color: #111;
+        }
+
+        #checkLab {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 14px;
+
+
+            border: none;
+            border-radius: 7px;
+
+            background: #222;
+            color: white;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        #checkLab:hover {
+            background: #444;
+        }
+
+        .tip {
+            margin-top: 18px;
+            padding-top: 12px;
+
+            border-top: 1px solid #ddd;
+
+            text-align: center;
+            font-size: 12px;
+            color: #000000;
+        }
+
+        .manual-search {
+            margin-bottom: 16px;
+        }
+
+        #labInput {
+            width: 100%;
+            box-sizing: border-box;
+
+            padding: 10px 12px;
+            margin-bottom: 8px;
+
+            border: 1px solid #ccc;
+            border-radius: 7px;
+
+            font-size: 13px;
+        }
+
+        #searchLab {
+            width: 100%;
+            padding: 9px;
+
+            border: none;
+            border-radius: 7px;
+
+            background: #555;
+            color: white;
+
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        #manualResult {
+            margin-top: 10px;
+            padding: 10px 12px;
+
+            background: #fff;
+            border-radius: 7px;
+            border-left: 4px solid #222;
+
+            font-size: 13px;
+            line-height: 1.5;
+            font-weight: 500;
+
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>QBank LabConfirm</h1>
+
+    <div class="description">
+        Quickly view normal reference ranges while working through medical questions.
+    </div>
+
+    <div class="shortcut">
+        Highlight a lab value and press <strong>Alt + L</strong>
+        to display its normal range. Or click the button below to check the highlighted lab value.
+    </div>
+
+    <button id="checkLab">
+        Check Highlighted Lab
+    </button>
+
+    <div class="manual-search">
+        <input
+            type="text"
+            id="labInput"
+            placeholder="Enter lab, e.g. hemoglobin or hgb"
+        >
+
+        <button id="searchLab">
+            Check Lab
+        </button>
+
+        <div id="manualResult"></div>
+    </div>
+
+    <!-- <div class="tip">
+        Tips: Venmo: @nick-stefanko
+    </div> -->
+
+    <script src="../popup.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+#lab-value-tooltip {
+    position: absolute;
+    z-index: 2147483647;
+
+    min-width: 150px;
+    padding: 10px 14px;
+
+    background: #222;
+    color: white;
+
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+
+    pointer-events: none;
+}
+
+.lab-tooltip-name {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.lab-tooltip-range {
+    font-size: 13px;
+    opacity: 0.85;
+}
