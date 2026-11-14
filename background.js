@@ -132,3 +132,47 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         return;
     }
 });
+
+// Create right-click menu when extension is installed
+chrome.runtime.onInstalled.addListener(() => {
+    chrome.contextMenus.create({
+        id: "check-lab-context",
+        title: "Check LabConfirm Range",
+        contexts: ["selection"]
+    });
+});
+
+// Handle right-click lookup
+chrome.contextMenus.onClicked.addListener(async (info, tab) => {
+    if (info.menuItemId !== "check-lab-context") return;
+
+    const selectedText = info.selectionText?.trim();
+    if (!selectedText || !tab?.id) return;
+
+    // Normal webpage: use original tooltip
+    if (!tab.url?.toLowerCase().endsWith(".pdf") &&
+        !tab.url?.startsWith("chrome-extension://")) {
+
+        await handleLabLookup(tab.id, selectedText);
+        return;
+    }
+
+    // PDF: use small popup window
+    const lab = LAB_BANK[selectedText.toLowerCase()];
+    const normal = lab?.normal || "No lab range found";
+
+    await chrome.storage.session.set({
+        pdfLabResult: {
+            name: selectedText,
+            normal: normal
+        }
+    });
+
+    await chrome.windows.create({
+        url: chrome.runtime.getURL("pdf_result.html"),
+        type: "popup",
+        width: 350,
+        height: 220,
+        focused: true
+    });
+});

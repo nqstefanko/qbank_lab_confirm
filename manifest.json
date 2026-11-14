@@ -5,7 +5,10 @@
     "version": "1.0.0",
     "permissions": [
         "activeTab",
-        "scripting"
+        "scripting",
+        "contextMenus",
+        "storage",
+        "windows"
     ],
     "background": {
         "service_worker": "background.js"
