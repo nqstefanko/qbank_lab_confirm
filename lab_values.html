@@ -118,6 +118,35 @@
 
             display: none;
         }
+
+        #labSuggestions {
+            background: white;
+            border-radius: 7px;
+            margin-bottom: 8px;
+            max-height: 180px;
+            overflow-y: auto;
+        }
+
+        .suggestion {
+            padding: 9px 12px;
+            font-size: 13px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+        }
+
+        .suggestion:hover {
+            background: #f3f3f3;
+            font-weight: 600;
+        }
+
+        .suggestion:last-child {
+            border-bottom: none;
+        }
+
+        .suggestion.selected {
+            background: #ffe0b3;
+            font-weight: 600;
+        }
     </style>
 </head>
 
@@ -143,7 +172,9 @@
             type="text"
             id="labInput"
             placeholder="Enter lab, e.g. hemoglobin or hgb"
+            autofocus
         >
+        <div id="labSuggestions"></div>
 
         <button id="searchLab">
             Check Lab

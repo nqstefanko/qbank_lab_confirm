@@ -176,3 +176,18 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
         focused: true
     });
 });
+
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message.type === "lab-suggestions") {
+        const query = message.query.trim().toLowerCase();
+
+        const matches = query
+            ? Object.keys(LAB_BANK)
+                .filter(name => name.toLowerCase().startsWith(query))
+                .slice(0, 5)
+            : [];
+
+        sendResponse({ matches });
+    }
+});

@@ -49,8 +49,7 @@ document.getElementById("searchLab").addEventListener("click", async () => {
 });
 
 document.getElementById("labInput").addEventListener("keydown", (event) => {
-
-    if (event.key === "Enter") {
+    if (event.key === "Enter" && selectedIndex === -1) {
         document.getElementById("searchLab").click();
     }
 });
@@ -62,5 +61,73 @@ document.getElementById("labInput").addEventListener("input", (event) => {
 
         result.innerHTML = "";
         result.style.display = "none";
+    }
+});
+
+
+// ========================================
+// Lab autocomplete
+// ========================================
+
+const labInput = document.getElementById("labInput");
+const suggestions = document.getElementById("labSuggestions");
+
+labInput.addEventListener("input", async () => {
+    const query = labInput.value.trim();
+
+    suggestions.innerHTML = "";
+    selectedIndex = -1;
+
+
+    if (!query) return;
+
+    const response = await chrome.runtime.sendMessage({
+        type: "lab-suggestions",
+        query
+    });
+
+    // Ignore outdated responses if the user typed again
+    if (labInput.value.trim() !== query) return;
+
+    response.matches.forEach(name => {
+        const item = document.createElement("div");
+        item.className = "suggestion";
+        item.textContent = name;
+
+        item.addEventListener("click", () => {
+            labInput.value = name;
+            suggestions.innerHTML = "";
+            document.getElementById("searchLab").click();
+        });
+
+        suggestions.appendChild(item);
+    });
+});
+
+
+let selectedIndex = -1;
+
+labInput.addEventListener("keydown", (event) => {
+    const items = [...suggestions.querySelectorAll(".suggestion")];
+
+    if (!items.length) return;
+
+    if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+        event.preventDefault();
+
+        selectedIndex = event.key === "ArrowDown"
+            ? (selectedIndex + 1) % items.length
+            : (selectedIndex - 1 + items.length) % items.length;
+
+        items.forEach((item, i) => {
+            item.classList.toggle("selected", i === selectedIndex);
+        });
+    }
+
+    if (event.key === "Enter" && selectedIndex >= 0) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+
+        items[selectedIndex].click();
     }
 });
